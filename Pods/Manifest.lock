@@ -1,0 +1,27 @@
+PODS:
+  - Nimble (6.0.1)
+  - PureLayout (3.0.2)
+  - Quick (1.1.0)
+  - ReactiveCocoa (5.0.0):
+    - ReactiveSwift (~> 1.0.0)
+  - ReactiveSwift (1.0.0):
+    - Result (~> 3.1)
+  - Result (3.1.0)
+
+DEPENDENCIES:
+  - Nimble
+  - PureLayout
+  - Quick
+  - ReactiveCocoa (~> 5.0.0)
+
+SPEC CHECKSUMS:
+  Nimble: 1527fd1bd2b4cf0636251a36bc8ab37e81da8347
+  PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
+  Quick: dafc587e21eed9f4cab3249b9f9015b0b7a7f71d
+  ReactiveCocoa: 60ef0da915b4f70c34ebecc3f4fb8f96af0e53d6
+  ReactiveSwift: f391724ee318a2cfd3e37dfb041cd49ecf4e7869
+  Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
+
+PODFILE CHECKSUM: 712eeae3099f25b5d51c5fab371bce6a3dd168ee
+
+COCOAPODS: 1.2.0
