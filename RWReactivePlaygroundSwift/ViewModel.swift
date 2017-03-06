@@ -22,14 +22,14 @@ class ViewModel {
     
     public func validPasswordSignal(passwordSignal: Signal<String?, NoError>) -> Signal<Bool, NoError> {
         return passwordSignal.map({ [weak self] (text) in
-            return self?.isValidPassword(password: text ?? "")
+            return self?._isValidPassword(password: text ?? "")
         })
             .skipNil()
     }
     
     func validUsernameSignal(usernameSignal: Signal<String?, NoError>) -> Signal<Bool, NoError> {
         return usernameSignal.map({ [weak self] (text) in
-            return self?.isValidUsername(username: text ?? "")
+            return self?._isValidUsername(username: text ?? "")
         })
             .skipNil()
     }
@@ -48,11 +48,11 @@ class ViewModel {
             })
     }
     
-    func isValidUsername(username: String) -> Bool {
+    fileprivate func _isValidUsername(username: String) -> Bool {
         return username.characters.count > 3
     }
     
-    func isValidPassword(password: String) -> Bool {
+    fileprivate func _isValidPassword(password: String) -> Bool {
         return password.characters.count > 3
     }
 }
