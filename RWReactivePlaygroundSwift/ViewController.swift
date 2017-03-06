@@ -82,17 +82,6 @@ class ViewController: UIViewController {
     }
     
     fileprivate func _bindUI(viewModel: ViewModel) {
-        // Step 1: Break this out into a private func that takes a signal, does something, and returns another signal
-        // Step 2: Move the private func to the viewModel.
-        // Step 3: Test ViewModel!
-        // Way more Testable :)
-        // Step 4: Profit!!!
-        //        let validUsernameSignal = _usernameTextField.reactive.continuousTextValues
-        //            .map({ [weak self] (text) in
-        //                return self?.isValidUsername(username: text ?? "")
-        //            })
-        //        .skipNil()
-        
         let usernameTextFieldSignal = _usernameTextField.reactive.continuousTextValues
         let passwordTextfieldSignal = _passwordTextField.reactive.continuousTextValues
         
