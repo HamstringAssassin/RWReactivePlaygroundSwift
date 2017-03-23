@@ -1,4 +1,3 @@
-
 //
 //  KittenViewController.swift
 //  RWReactivePlaygroundSwift
@@ -15,21 +14,21 @@ class KittenViewController: UIViewController {
         get { return "Kitten!" }
         set { self.title = newValue }
     }
-    
+
     fileprivate var _kittenImage: UIImageView! {
         didSet {
             _kittenImage.contentMode = .scaleAspectFill
             _kittenImage.image = UIImage(named: "kitten")
         }
     }
-    
+
     fileprivate var _creditLabel: UILabel! {
         didSet {
             _creditLabel.font = UIFont.systemFont(ofSize: 9)
             _creditLabel.text = "http://www.flickr.com/photos/50362297@N07"
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         _createUI()
@@ -49,7 +48,7 @@ extension KittenViewController {
         _kittenImage = UIImageView(forAutoLayout: ())
         _creditLabel = UILabel(forAutoLayout: ())
     }
-    
+
     fileprivate func _layoutUI() {
         self.view.addSubview(_kittenImage)
         _kittenImage.autoPinEdgesToSuperviewEdges()
@@ -58,7 +57,7 @@ extension KittenViewController {
         _creditLabel.autoPinEdge(.bottom, to: .bottom, of: view, withOffset: -20)
 
     }
-    
+
     fileprivate func _skinUI() {
         self.view.backgroundColor = UIColor.white
     }

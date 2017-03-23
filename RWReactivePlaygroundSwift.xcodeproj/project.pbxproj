@@ -230,6 +230,7 @@
 				600ABB1D1E43AB0200C02E25 /* Resources */,
 				EB9DE4544C4F611F4E3AD618 /* [CP] Embed Pods Frameworks */,
 				DCE28CF894D63BF5ACD6AA1A /* [CP] Copy Pods Resources */,
+				6009CF9D1E83E71F00F5DFD3 /* Run SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -415,6 +416,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RWReactivePlaygroundSwiftTests/Pods-RWReactivePlaygroundSwiftTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		6009CF9D1E83E71F00F5DFD3 /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 		BF294EFAAD8E972BD3DEF6BF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

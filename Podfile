@@ -8,6 +8,7 @@ target 'RWReactivePlaygroundSwift' do
   # Pods for RWReactivePlaygroundSwift
   pod 'PureLayout'
   pod 'ReactiveCocoa', '~> 5.0.0'
+  pod 'SwiftLint'
 
   target 'RWReactivePlaygroundSwiftTests' do
     inherit! :search_paths
