@@ -50,6 +50,8 @@ class ViewModel {
     fileprivate func _isValidUsername(username: String) -> Bool {
         return username.characters.count > 3
     }
+    
+    
 
     fileprivate func _isValidPassword(password: String) -> Bool {
         return password.characters.count > 3
