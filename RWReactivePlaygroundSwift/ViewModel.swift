@@ -35,7 +35,7 @@ class ViewModel {
 
     func userNameTextFieldBackgroundColor(usernameSignal: Signal<String?, NoError>) -> Signal<UIColor, NoError> {
         return validUsernameSignal(usernameSignal: usernameSignal)
-        .map({ 
+        .map({
             return $0 ? UIColor.clear : UIColor.yellow
         })
     }
