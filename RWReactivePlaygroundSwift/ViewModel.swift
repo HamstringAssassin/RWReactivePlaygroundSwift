@@ -42,7 +42,7 @@ class ViewModel {
 
     func passwordTextFieldBackgroundColor(passwordSignal: Signal<String?, NoError>) -> Signal<UIColor, NoError> {
         return validPasswordSignal(passwordSignal: passwordSignal)
-            .map({
+            .map({ 
                 return $0 ? UIColor.clear : UIColor.yellow
             })
     }
