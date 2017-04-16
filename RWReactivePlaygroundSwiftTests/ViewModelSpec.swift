@@ -18,84 +18,67 @@ class ViewModelSpec: QuickSpec {
         describe("ViewModel functions") {
 
             let viewModel = ViewModel()
-            var passwordSignal: Signal<String?, NoError>?
-            var usernameSignal: Signal<String?, NoError>?
-            var testScheduler: TestScheduler!
-
-            beforeEach {
-                testScheduler = TestScheduler()
-            }
+            var passwordSignal: Signal<String?, NoError>!
+            var passwordObserver: Signal<String?, NoError>.Observer!
+            
+            var usernameSignal: Signal<String?, NoError>!
+            var usernameObserver: Signal<String?, NoError>.Observer!
 
             context("Given passsord is nil", {
+                beforeEach {
+                    let (signalTemp, observerTemp) = Signal<String?, NoError>.pipe()
+                    passwordSignal = signalTemp
+                    passwordObserver = observerTemp
+                }
+                
                 it("Should return false for validPasswordSignal", closure: {
-                    passwordSignal = Signal { observer in
-                        testScheduler.schedule {
-                            observer.send(value: nil)
-                            observer.sendCompleted()
-                        }
-                        return nil
-                    }
-                    var testValue = false
+                    var testValue = true
 
-                    viewModel.validPasswordSignal(passwordSignal: passwordSignal!)
+                    viewModel.validPasswordSignal(passwordSignal: passwordSignal)
                         .observeValues({ (value) in
                             testValue = value
                         })
-
-                    expect(testValue).to(equal(false))
-                    testScheduler.run()
+                    
+                    expect(testValue).to(equal(true))
+                    passwordObserver.send(value: nil)
                     expect(testValue).to(equal(false))
                 })
 
                 it("Should return the correct background Color", closure: {
-                    passwordSignal = Signal { observer in
-                        testScheduler.schedule {
-                            observer.send(value: nil)
-                            observer.sendCompleted()
-                        }
-                        return nil
-                    }
                     var testValue = UIColor.black
 
-                    viewModel.passwordTextFieldBackgroundColor(passwordSignal: passwordSignal!)
+                    viewModel.passwordTextFieldBackgroundColor(passwordSignal: passwordSignal)
                         .observeValues({
                             testValue = $0
                         })
 
                     expect(testValue).to(equal(UIColor.black))
-                    testScheduler.run()
+                    passwordObserver.send(value: nil)
                     expect(testValue).to(equal(UIColor.yellow))
                 })
             })
 
             context("given a valid password and invalid useranme", {
                 beforeEach {
-                    passwordSignal = Signal { observer in
-                        testScheduler.schedule {
-                            observer.send(value: "valid")
-                            observer.sendCompleted()
-                        }
-                        return nil
-                    }
-
-                    usernameSignal = Signal { observer in
-                        testScheduler.schedule {
-                            observer.send(value: "12")
-                            observer.sendCompleted()
-                        }
-                        return nil
-                    }
+                    let (signalTemp, observerTemp) = Signal<String?, NoError>.pipe()
+                    passwordSignal = signalTemp
+                    passwordObserver = observerTemp
+                    
+                    let (userSignal, userObserver) = Signal<String?, NoError>.pipe()
+                    usernameSignal = userSignal
+                    usernameObserver = userObserver
                 }
 
                 it("Should return true for passwordSignal", closure: {
                     var testPasswordValue = false
+                    
                     viewModel.validPasswordSignal(passwordSignal: passwordSignal!)
                         .observeValues({ (value) in
                             testPasswordValue = value
                         })
 
                     expect(testPasswordValue).to(equal(false))
-                    testScheduler.run()
+                    passwordObserver.send(value: "valid")
                     expect(testPasswordValue).to(equal(true))
                 })
 
@@ -107,7 +90,7 @@ class ViewModelSpec: QuickSpec {
                         })
 
                     expect(testvalue).to(equal(true))
-                    testScheduler.run()
+                    usernameObserver.send(value: "12")
                     expect(testvalue).to(equal(false))
                 })
 
@@ -118,7 +101,7 @@ class ViewModelSpec: QuickSpec {
                             testColor = $0
                         })
                     expect(testColor).to(equal(UIColor.black))
-                    testScheduler.run()
+                    passwordObserver.send(value: "valid")
                     expect(testColor).to(equal(UIColor.clear))
                 })
 
@@ -129,20 +112,19 @@ class ViewModelSpec: QuickSpec {
                             testValue = $0
                         })
                     expect(testValue).to(equal(false))
-                    testScheduler.run()
+                    usernameObserver.send(value: "12")
+                    passwordObserver.send(value: "valid")
                     expect(testValue).to(equal(false))
                 })
             })
 
             context("Given username is nil", {
+                beforeEach {
+                    let (userSignal, userObserver) = Signal<String?, NoError>.pipe()
+                    usernameSignal = userSignal
+                    usernameObserver = userObserver
+                }
                 it("Should return false for validUsername", closure: {
-                    usernameSignal = Signal { observer in
-                        testScheduler.schedule {
-                            observer.send(value: nil)
-                            observer.sendCompleted()
-                        }
-                        return nil
-                    }
                     var testValue = false
 
                     viewModel.validUsernameSignal(usernameSignal: usernameSignal!)
@@ -151,18 +133,11 @@ class ViewModelSpec: QuickSpec {
                         })
 
                     expect(testValue).to(equal(false))
-                    testScheduler.run()
+                    usernameObserver.send(value: nil)
                     expect(testValue).to(equal(false))
                 })
 
                 it("Should return the correct background Color", closure: {
-                    usernameSignal = Signal { observer in
-                        testScheduler.schedule {
-                            observer.send(value: nil)
-                            observer.sendCompleted()
-                        }
-                        return nil
-                    }
                     var testValue = UIColor.black
 
                     viewModel.userNameTextFieldBackgroundColor(usernameSignal: usernameSignal!)
@@ -171,28 +146,20 @@ class ViewModelSpec: QuickSpec {
                         })
 
                     expect(testValue).to(equal(UIColor.black))
-                    testScheduler.run()
+                    usernameObserver.send(value: nil)
                     expect(testValue).to(equal(UIColor.yellow))
                 })
             })
 
             context("Given a valid username and invalid password", {
                 beforeEach {
-                    passwordSignal = Signal { observer in
-                        testScheduler.schedule {
-                            observer.send(value: "va")
-                            observer.sendCompleted()
-                        }
-                        return nil
-                    }
-
-                    usernameSignal = Signal { observer in
-                        testScheduler.schedule {
-                            observer.send(value: "1234")
-                            observer.sendCompleted()
-                        }
-                        return nil
-                    }
+                    let (signalTemp, observerTemp) = Signal<String?, NoError>.pipe()
+                    passwordSignal = signalTemp
+                    passwordObserver = observerTemp
+                    
+                    let (userSignal, userObserver) = Signal<String?, NoError>.pipe()
+                    usernameSignal = userSignal
+                    usernameObserver = userObserver
                 }
 
                 it("Should return true for usernameSignal", closure: {
@@ -202,7 +169,7 @@ class ViewModelSpec: QuickSpec {
                             testValue = $0
                         })
                     expect(testValue).to(equal(false))
-                    testScheduler.run()
+                    usernameObserver.send(value: "1234")
                     expect(testValue).to(equal(true))
                 })
 
@@ -214,7 +181,7 @@ class ViewModelSpec: QuickSpec {
                         })
 
                     expect(testvalue).to(equal(false))
-                    testScheduler.run()
+                    passwordObserver.send(value: "12")
                     expect(testvalue).to(equal(false))
                 })
 
@@ -225,7 +192,7 @@ class ViewModelSpec: QuickSpec {
                             testColor = $0
                         })
                     expect(testColor).to(equal(UIColor.black))
-                    testScheduler.run()
+                    usernameObserver.send(value: "1234")
                     expect(testColor).to(equal(UIColor.clear))
                 })
 
@@ -236,29 +203,21 @@ class ViewModelSpec: QuickSpec {
                             testValue = $0
                         })
                     expect(testValue).to(equal(false))
-                    testScheduler.run()
+                    usernameObserver.send(value: "1234")
+                    passwordObserver.send(value: "12")
                     expect(testValue).to(equal(false))
                 })
             })
 
             context("Given a valid password and username", {
-
                 beforeEach {
-                    passwordSignal = Signal { observer in
-                        testScheduler.schedule {
-                            observer.send(value: "1234")
-                            observer.sendCompleted()
-                        }
-                        return nil
-                    }
-
-                    usernameSignal = Signal { observer in
-                        testScheduler.schedule {
-                            observer.send(value: "1234")
-                            observer.sendCompleted()
-                        }
-                        return nil
-                    }
+                    let (signalTemp, observerTemp) = Signal<String?, NoError>.pipe()
+                    passwordSignal = signalTemp
+                    passwordObserver = observerTemp
+                    
+                    let (userSignal, userObserver) = Signal<String?, NoError>.pipe()
+                    usernameSignal = userSignal
+                    usernameObserver = userObserver
                 }
 
                 it("Should return the correct value for all valid fields", closure: {
@@ -268,13 +227,11 @@ class ViewModelSpec: QuickSpec {
                             testValue = $0
                         })
                     expect(testValue).to(equal(false))
-                    testScheduler.run()
+                    usernameObserver.send(value: "1234")
+                    passwordObserver.send(value: "1234")
                     expect(testValue).to(equal(true))
                 })
-
             })
-
         }
-
     }
 }
