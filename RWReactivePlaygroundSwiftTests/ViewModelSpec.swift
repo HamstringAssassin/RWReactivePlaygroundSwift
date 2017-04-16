@@ -31,19 +31,6 @@ class ViewModelSpec: QuickSpec {
                     passwordObserver = observerTemp
                 }
                 
-                it("Should return false for validPasswordSignal", closure: {
-                    var testValue = true
-
-                    viewModel.validPasswordSignal(passwordSignal: passwordSignal)
-                        .observeValues({ (value) in
-                            testValue = value
-                        })
-                    
-                    expect(testValue).to(equal(true))
-                    passwordObserver.send(value: nil)
-                    expect(testValue).to(equal(false))
-                })
-
                 it("Should return the correct background Color", closure: {
                     var testValue = UIColor.black
 
@@ -68,31 +55,6 @@ class ViewModelSpec: QuickSpec {
                     usernameSignal = userSignal
                     usernameObserver = userObserver
                 }
-
-                it("Should return true for passwordSignal", closure: {
-                    var testPasswordValue = false
-                    
-                    viewModel.validPasswordSignal(passwordSignal: passwordSignal!)
-                        .observeValues({ (value) in
-                            testPasswordValue = value
-                        })
-
-                    expect(testPasswordValue).to(equal(false))
-                    passwordObserver.send(value: "valid")
-                    expect(testPasswordValue).to(equal(true))
-                })
-
-                it("Should return false for usernameSignal", closure: {
-                    var testvalue = true
-                    viewModel.validUsernameSignal(usernameSignal: usernameSignal!)
-                        .observeValues({
-                            testvalue = $0
-                        })
-
-                    expect(testvalue).to(equal(true))
-                    usernameObserver.send(value: "12")
-                    expect(testvalue).to(equal(false))
-                })
 
                 it("Should have the correct password text field background color", closure: {
                     var testColor = UIColor.black
@@ -124,18 +86,6 @@ class ViewModelSpec: QuickSpec {
                     usernameSignal = userSignal
                     usernameObserver = userObserver
                 }
-                it("Should return false for validUsername", closure: {
-                    var testValue = false
-
-                    viewModel.validUsernameSignal(usernameSignal: usernameSignal!)
-                        .observeValues({ (value) in
-                            testValue = value
-                        })
-
-                    expect(testValue).to(equal(false))
-                    usernameObserver.send(value: nil)
-                    expect(testValue).to(equal(false))
-                })
 
                 it("Should return the correct background Color", closure: {
                     var testValue = UIColor.black
@@ -161,29 +111,6 @@ class ViewModelSpec: QuickSpec {
                     usernameSignal = userSignal
                     usernameObserver = userObserver
                 }
-
-                it("Should return true for usernameSignal", closure: {
-                    var testValue = false
-                    viewModel.validUsernameSignal(usernameSignal: usernameSignal!)
-                        .observeValues({
-                            testValue = $0
-                        })
-                    expect(testValue).to(equal(false))
-                    usernameObserver.send(value: "1234")
-                    expect(testValue).to(equal(true))
-                })
-
-                it("Should return false for passwordSignal", closure: {
-                    var testvalue = false
-                    viewModel.validPasswordSignal(passwordSignal: passwordSignal!)
-                        .observeValues({
-                            testvalue = $0
-                        })
-
-                    expect(testvalue).to(equal(false))
-                    passwordObserver.send(value: "12")
-                    expect(testvalue).to(equal(false))
-                })
 
                 it("Should have the correct username text field background color", closure: {
                     var testColor = UIColor.black

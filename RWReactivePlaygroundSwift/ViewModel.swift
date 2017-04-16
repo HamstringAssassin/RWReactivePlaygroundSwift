@@ -14,38 +14,41 @@ import enum Result.NoError
 class ViewModel {
 
     func allValidFields(usernameSignal: Signal<String?, NoError>, passwordSignal: Signal<String?, NoError>) -> Signal<Bool, NoError> {
-        return validPasswordSignal(passwordSignal: passwordSignal).combineLatest(with: validUsernameSignal(usernameSignal: usernameSignal))
-        .map({ (validPassword, validUsername) in
-            return validPassword && validUsername
-        })
+        return _validPasswordSignal(passwordSignal: passwordSignal).combineLatest(with: _validUsernameSignal(usernameSignal: usernameSignal))
+            .map({ (validPassword, validUsername) in
+                return validPassword && validUsername
+            })
     }
 
-    public func validPasswordSignal(passwordSignal: Signal<String?, NoError>) -> Signal<Bool, NoError> {
+    func userNameTextFieldBackgroundColor(usernameSignal: Signal<String?, NoError>) -> Signal<UIColor, NoError> {
+        return _validUsernameSignal(usernameSignal: usernameSignal)
+            .map({
+                return $0 ? UIColor.clear : UIColor.yellow
+            })
+    }
+
+    func passwordTextFieldBackgroundColor(passwordSignal: Signal<String?, NoError>) -> Signal<UIColor, NoError> {
+        return _validPasswordSignal(passwordSignal: passwordSignal)
+            .map({
+                return $0 ? UIColor.clear : UIColor.yellow
+            })
+    }
+}
+
+// Private funcs
+extension ViewModel {
+    fileprivate func _validPasswordSignal(passwordSignal: Signal<String?, NoError>) -> Signal<Bool, NoError> {
         return passwordSignal.map({ [weak self] (text) in
             return self?._isValidPassword(password: text ?? "")
         })
             .skipNil()
     }
 
-    func validUsernameSignal(usernameSignal: Signal<String?, NoError>) -> Signal<Bool, NoError> {
+    fileprivate func _validUsernameSignal(usernameSignal: Signal<String?, NoError>) -> Signal<Bool, NoError> {
         return usernameSignal.map({ [weak self] (text) in
             return self?._isValidUsername(username: text ?? "")
         })
             .skipNil()
-    }
-
-    func userNameTextFieldBackgroundColor(usernameSignal: Signal<String?, NoError>) -> Signal<UIColor, NoError> {
-        return validUsernameSignal(usernameSignal: usernameSignal)
-        .map({
-            return $0 ? UIColor.clear : UIColor.yellow
-        })
-    }
-
-    func passwordTextFieldBackgroundColor(passwordSignal: Signal<String?, NoError>) -> Signal<UIColor, NoError> {
-        return validPasswordSignal(passwordSignal: passwordSignal)
-            .map({
-                return $0 ? UIColor.clear : UIColor.yellow
-            })
     }
 
     fileprivate func _isValidUsername(username: String) -> Bool {
