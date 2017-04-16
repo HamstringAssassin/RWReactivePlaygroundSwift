@@ -1,5 +1,4 @@
-[![Build Status](https://www.bitrise.io/app/08c39db86eb41a1a.svg?token=3A-oeSy8AQW713x-jiXI7A&branch=develop)](https://www.bitrise.io/app/08c39db86eb41a1a)
-
+[![Build Status](https://www.bitrise.io/app/58b98a39453c80ad.svg?token=YAH04NdktgAy4n_tLhEg9A&branch=master)](https://www.bitrise.io/app/58b98a39453c80ad)
 
 # RWReactivePlaygroundSwift
 
