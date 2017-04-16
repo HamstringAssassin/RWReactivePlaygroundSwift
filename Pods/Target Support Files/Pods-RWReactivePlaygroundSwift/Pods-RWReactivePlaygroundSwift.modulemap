@@ -1,0 +1,6 @@
+framework module Pods_RWReactivePlaygroundSwift {
+  umbrella header "Pods-RWReactivePlaygroundSwift-umbrella.h"
+
+  export *
+  module * { export * }
+}
